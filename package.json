@@ -1,0 +1,22 @@
+{
+  "name": "aprendealeer",
+  "version": "0.1.0",
+  "description": "Aprende a Leer — Spanish literacy app for children",
+  "type": "module",
+  "scripts": {
+    "dev": "quasar dev",
+    "build": "quasar build",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.18.0",
+    "pinia": "^3.0.4",
+    "quasar": "^2.19.3",
+    "vue": "^3.5.33",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@quasar/app-vite": "^2.6.0",
+    "sass": "^1.99.0"
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "lesson-1-1",
+    "chapterId": "chap-1",
+    "title": "El niño y el sol",
+    "order": 1,
+    "exerciseIds": ["ex-1-1-1", "ex-1-1-2"]
+  },
+  {
+    "id": "lesson-1-2",
+    "chapterId": "chap-1",
+    "title": "La casa y el perro",
+    "order": 2,
+    "exerciseIds": ["ex-1-2-1", "ex-1-2-2", "ex-1-2-3"]
+  },
+  {
+    "id": "lesson-2-1",
+    "chapterId": "chap-2",
+    "title": "Separando sílabas",
+    "order": 1,
+    "exerciseIds": ["ex-2-1-1", "ex-2-1-2"]
+  },
+  {
+    "id": "lesson-2-2",
+    "chapterId": "chap-2",
+    "title": "Más sílabas divertidas",
+    "order": 2,
+    "exerciseIds": ["ex-2-2-1"]
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "chap-1",
+    "title": "Las primeras palabras",
+    "description": "Aprende palabras sencillas y forma tus primeras oraciones",
+    "order": 1,
+    "icon": "abc"
+  },
+  {
+    "id": "chap-2",
+    "title": "Jugando con las sílabas",
+    "description": "Divide palabras en sílabas y descubre cómo suenan",
+    "order": 2,
+    "icon": "puzzle"
+  }
+]

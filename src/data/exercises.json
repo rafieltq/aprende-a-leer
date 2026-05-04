@@ -1,0 +1,93 @@
+[
+  {
+    "id": "ex-1-1-1",
+    "lessonId": "lesson-1-1",
+    "type": "dragAndDrop",
+    "instructions": "Arrastra las palabras para formar la oración",
+    "config": {
+      "wordBank": ["el", "sol", "brilla"],
+      "slots": 3
+    },
+    "correctAnswer": ["el", "sol", "brilla"]
+  },
+  {
+    "id": "ex-1-1-2",
+    "lessonId": "lesson-1-1",
+    "type": "dragAndDrop",
+    "instructions": "Ordena las palabras correctamente",
+    "config": {
+      "wordBank": ["niño", "El", "juega"],
+      "slots": 3
+    },
+    "correctAnswer": ["El", "niño", "juega"]
+  },
+  {
+    "id": "ex-1-2-1",
+    "lessonId": "lesson-1-2",
+    "type": "dragAndDrop",
+    "instructions": "Forma la oración correcta",
+    "config": {
+      "wordBank": ["perro", "El", "grande", "es"],
+      "slots": 4
+    },
+    "correctAnswer": ["El", "perro", "es", "grande"]
+  },
+  {
+    "id": "ex-1-2-2",
+    "lessonId": "lesson-1-2",
+    "type": "dragAndDrop",
+    "instructions": "¿Qué dice la oración?",
+    "config": {
+      "wordBank": ["casa", "la", "en", "está"],
+      "slots": 4
+    },
+    "correctAnswer": ["está", "en", "la", "casa"]
+  },
+  {
+    "id": "ex-1-2-3",
+    "lessonId": "lesson-1-2",
+    "type": "dragAndDrop",
+    "instructions": "Ordena las palabras",
+    "config": {
+      "wordBank": ["gato", "un", "tiene", "María"],
+      "slots": 4
+    },
+    "correctAnswer": ["María", "tiene", "un", "gato"]
+  },
+  {
+    "id": "ex-2-1-1",
+    "lessonId": "lesson-2-1",
+    "type": "dragAndDrop",
+    "instructions": "Ordena las sílabas para formar la palabra",
+    "config": {
+      "wordBank": ["sa", "ca", "be"],
+      "slots": 3,
+      "isSyllable": true
+    },
+    "correctAnswer": ["ca", "be", "sa"]
+  },
+  {
+    "id": "ex-2-1-2",
+    "lessonId": "lesson-2-1",
+    "type": "dragAndDrop",
+    "instructions": "Forma la palabra con las sílabas",
+    "config": {
+      "wordBank": ["llo", "ca", "bo"],
+      "slots": 3,
+      "isSyllable": true
+    },
+    "correctAnswer": ["ca", "bo", "llo"]
+  },
+  {
+    "id": "ex-2-2-1",
+    "lessonId": "lesson-2-2",
+    "type": "dragAndDrop",
+    "instructions": "Ordena las sílabas correctamente",
+    "config": {
+      "wordBank": ["dor", "ma", "do", "sa"],
+      "slots": 4,
+      "isSyllable": true
+    },
+    "correctAnswer": ["sa", "ma", "dor", "do"]
+  }
+]

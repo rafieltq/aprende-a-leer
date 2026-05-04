@@ -65,7 +65,7 @@
                 flat
                 bordered
                 :class="{
-                  'bg-green-1 border-primary': isCompleted(lesson.id),
+                  'bg-red-1 border-primary': isCompleted(lesson.id),
                   'bg-white border-secondary': isCurrent(lesson.id) && !isCompleted(lesson.id),
                   'bg-grey-2 text-grey-5': !isUnlocked(lesson.id)
                 }"
@@ -111,7 +111,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGameStore } from 'stores/gameStore'
 
@@ -121,6 +121,10 @@ const props = defineProps({
 
 const router = useRouter()
 const store = useGameStore()
+
+onMounted(() => {
+  store.loadProgress()
+})
 
 const chapterLessons = computed(() => store.lessonsForChapter(props.chapterId))
 

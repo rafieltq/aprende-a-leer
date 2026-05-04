@@ -109,7 +109,7 @@ function start () {
 
 <style scoped>
 .splash-page {
-  background: linear-gradient(160deg, #e8f5e9 0%, #fff8e1 50%, #fce4ec 100%);
+  background: linear-gradient(160deg, #fef6f6 0%, #fff8e1 50%, #e8f4f8 100%);
   min-height: 100vh;
   position: relative;
   overflow: hidden;
@@ -125,7 +125,7 @@ function start () {
 }
 
 .splash-title {
-  background: linear-gradient(135deg, #4caf50, #ff9800);
+  background: linear-gradient(135deg, #D12052, #03AED2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -152,17 +152,17 @@ function start () {
 }
 .blob-1 {
   width: 300px; height: 300px;
-  background: #4caf50;
+  background: #D12052;
   top: -80px; right: -80px;
 }
 .blob-2 {
   width: 200px; height: 200px;
-  background: #ff9800;
+  background: #03AED2;
   bottom: 40px; left: -60px;
 }
 .blob-3 {
   width: 180px; height: 180px;
-  background: #9c27b0;
+  background: #F8DE22;
   bottom: -50px; right: 20px;
 }
 </style>

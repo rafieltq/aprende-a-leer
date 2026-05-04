@@ -20,7 +20,7 @@
                 <q-icon
                   v-for="n in 3" :key="n"
                   :name="n <= starsEarned ? 'star' : 'star_border'"
-                  :color="n <= starsEarned ? 'warning' : 'grey-4'"
+                  :color="n <= starsEarned ? 'accent' : 'grey-4'"
                   size="48px"
                   class="star-anim"
                   :style="{ animationDelay: `${n * 0.2}s` }"
@@ -82,7 +82,7 @@
             <q-card-section class="text-center q-pt-none">
               <div class="exercise-type-badge q-mb-sm">
                 <q-chip
-                  :color="isSyllable ? 'cyan' : 'secondary'"
+                  :color="isSyllable ? 'secondary' : 'primary'"
                   text-color="white"
                   size="sm"
                   class="text-weight-bold"
@@ -161,7 +161,7 @@
                     'chip-selected': dnd.selectedWord.value === word,
                     'chip-dragging': dnd.draggedWord.value === word
                   }"
-                  :color="isSyllable ? 'cyan' : 'orange'"
+                  :color="isSyllable ? 'secondary' : 'primary'"
                   text-color="white"
                   size="xl"
                   clickable
@@ -307,9 +307,9 @@ const nextLessonRoute = computed(() => {
 
 function checkAnswer () {
   const result = dnd.submit()
-  if (result.correct) {
-    store.completeExercise(props.exerciseId, result.score)
-  }
+  // Always call completeExercise to track attempts,
+  // even for incorrect answers (correct=false just increments counter)
+  store.completeExercise(props.exerciseId, result.correct)
 }
 
 function retry () {
@@ -319,8 +319,7 @@ function retry () {
 function nextOrComplete () {
   if (isLastExercise.value) {
     // Show lesson complete
-    const lessonProgress = store.progress[props.lessonId]
-    starsEarned.value = lessonProgress?.score ? Math.ceil(lessonProgress.score / 2) : 1
+    starsEarned.value = store.getStarsForLesson(props.lessonId)
     lessonComplete.value = true
   } else {
     // Navigate to next exercise
@@ -357,6 +356,7 @@ function goBack () {
 // ── Lifecycle ──
 
 onMounted(() => {
+  store.loadProgress()
   store.setCurrentLesson(props.lessonId)
   const chapter = store.chapters.find(c =>
     store.lessons.some(l => l.id === props.lessonId && l.chapterId === c.id)

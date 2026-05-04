@@ -64,7 +64,9 @@ export const useGameStore = defineStore('game', () => {
     const idx = chapterLessons.findIndex(l => l.id === lessonId)
     if (idx > 0) {
       const prev = chapterLessons[idx - 1]
-      if (progress.value[prev.id]?.completed) return true
+      const prevProg = progress.value[prev.id]
+      // Must be completed AND score >= 60
+      if (prevProg?.completed && (prevProg.score || 0) >= 60) return true
       return false
     }
 
@@ -76,7 +78,10 @@ export const useGameStore = defineStore('game', () => {
         const prevChapter = sortedChapters[chapIdx - 1]
         const prevChapterLessons = lessons.value
           .filter(l => l.chapterId === prevChapter.id)
-        return prevChapterLessons.every(l => progress.value[l.id]?.completed)
+        return prevChapterLessons.every(l => {
+          const p = progress.value[l.id]
+          return p?.completed && (p.score || 0) >= 60
+        })
       }
     }
 
@@ -92,11 +97,28 @@ export const useGameStore = defineStore('game', () => {
     return completed / chapterLessons.length
   })
 
+  /** Stars earned for a completed lesson (0-3) */
+  const getStarsForLesson = computed(() => (lessonId) => {
+    const lessonProg = progress.value[lessonId]
+    if (!lessonProg || !lessonProg.completed) return 0
+    const exList = Object.values(lessonProg.exercises)
+    if (exList.length === 0) return 0
+    const total = exList.reduce((sum, ex) => {
+      // score 100 = correct on 1st try → 2 stars
+      // score 60  = correct after retry → 1 star
+      return sum + (ex.score >= 100 ? 2 : 1)
+    }, 0)
+    return Math.round(total / exList.length)
+  })
+
   /** Overall progress (0-1) */
   const overallProgress = computed(() => {
     const allLessons = lessons.value
     if (allLessons.length === 0) return 0
-    const completed = allLessons.filter(l => progress.value[l.id]?.completed).length
+    const completed = allLessons.filter(l => {
+      const p = progress.value[l.id]
+      return p?.completed && (p.score || 0) >= 60
+    }).length
     return completed / allLessons.length
   })
 
@@ -123,35 +145,59 @@ export const useGameStore = defineStore('game', () => {
 
   /**
    * Record exercise attempt & check if lesson complete
+   *
+   * Scoring:
+   *   - 1st attempt correct → score 100 (2 stars)
+   *   - 2nd+ attempt correct → score 60  (1 star)
+   *
+   * @returns {{ lessonComplete: boolean, attemptCount: number }}
    */
-  function completeExercise (exerciseId, score) {
+  function completeExercise (exerciseId, correct) {
     const lesson = lessons.value.find(l => l.id === currentLessonId.value)
-    if (!lesson) return false
+    if (!lesson) return { lessonComplete: false, attemptCount: 0 }
 
     // Init lesson progress
     if (!progress.value[lesson.id]) {
       progress.value[lesson.id] = { completed: false, score: 0, exercises: {} }
     }
 
-    // Track per-exercise
-    progress.value[lesson.id].exercises[exerciseId] = {
-      attempts: (progress.value[lesson.id].exercises[exerciseId]?.attempts || 0) + 1,
-      score
+    const prev = progress.value[lesson.id].exercises[exerciseId]
+    const attemptCount = (prev?.attempts || 0) + 1
+
+    // Score: 100 if correct on 1st try, 60 if correct after retry
+    const exScore = correct ? (attemptCount === 1 ? 100 : 60) : 0
+
+    // Track per-exercise (only update if new attempt is correct or no score yet)
+    if (!prev || !prev.score || correct) {
+      progress.value[lesson.id].exercises[exerciseId] = {
+        attempts: attemptCount,
+        score: exScore
+      }
+    } else {
+      // Incorrect attempt, just increment counter
+      progress.value[lesson.id].exercises[exerciseId] = {
+        attempts: attemptCount,
+        score: prev.score
+      }
     }
 
-    // Check if all exercises in lesson done
-    const allDone = lesson.exerciseIds.every(
-      id => progress.value[lesson.id].exercises[id]?.attempts > 0
-    )
+    // Check if all exercises in lesson have been completed (correct)
+    const allDone = lesson.exerciseIds.every(id => {
+      const ex = progress.value[lesson.id].exercises[id]
+      return ex && ex.score > 0
+    })
     if (allDone) {
-      const totalScore = Object.values(progress.value[lesson.id].exercises).reduce(
-        (sum, ex) => sum + ex.score, 0
+      const scores = lesson.exerciseIds.map(
+        id => progress.value[lesson.id].exercises[id].score
+      )
+      const avgScore = Math.round(
+        scores.reduce((s, v) => s + v, 0) / scores.length
       )
       progress.value[lesson.id].completed = true
-      progress.value[lesson.id].score = Math.round(totalScore / lesson.exerciseIds.length)
+      progress.value[lesson.id].score = avgScore
     }
 
-    return allDone
+    return { lessonComplete: allDone, attemptCount }
   }
 
   function resetLessonProgress (lessonId) {
@@ -199,6 +245,7 @@ export const useGameStore = defineStore('game', () => {
     isLessonUnlocked,
     chapterProgress,
     overallProgress,
+    getStarsForLesson,
     // actions
     setCurrentChapter,
     setCurrentLesson,

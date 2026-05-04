@@ -18,13 +18,13 @@ export default defineConfig((/* ctx */) => {
     framework: {
       config: {
         brand: {
-          primary: '#4caf50',
-          secondary: '#ff9800',
-          accent: '#9c27b0',
-          positive: '#4caf50',
-          negative: '#ef5350',
-          info: '#42a5f5',
-          warning: '#ff9800'
+          primary: '#D12052',
+          secondary: '#03AED2',
+          accent: '#F8DE22',
+          positive: '#4CAF50',
+          negative: '#F45B26',
+          info: '#03AED2',
+          warning: '#F45B26'
         }
       },
       plugins: []

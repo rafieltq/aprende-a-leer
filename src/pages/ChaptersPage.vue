@@ -84,7 +84,7 @@ const icons = {
   book: 'book'
 }
 
-const colors = ['#4caf50', '#ff9800', '#9c27b0', '#42a5f5']
+const colors = ['#D12052', '#03AED2', '#F8DE22', '#F45B26']
 
 function stripeColor (idx) { return colors[idx % colors.length] }
 function iconBg (idx) { return colors[idx % colors.length] }
